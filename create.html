@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Article</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        async function createArticle(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+
+            const response = await fetch('http://localhost:8080/api/articles', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title })
+            });
+
+            if (response.ok) {
+                window.location.href = 'index.html';
+            } else {
+                alert('Failed to create article');
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto my-8 p-4">
+        <h1 class="text-3xl font-bold mb-4">Create New Article</h1>
+        <form onsubmit="createArticle(event)" class="space-y-4">
+            <div>
+                <label for="title" class="block text-lg">Title</label>
+                <input type="text" id="title" class="w-full p-2 border border-gray-300 rounded" required />
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded">Create Article</button>
+        </form>
+    </div>
+</body>
+
+</html>

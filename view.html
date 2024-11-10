@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Article</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let articleId = new URLSearchParams(window.location.search).get('id');
+
+        async function getArticle() {
+            const response = await fetch(`http://localhost:8080/api/articles/${articleId}`);
+            const article = await response.json();
+
+            if (article) {
+                document.getElementById('article-title').textContent = article.title;
+            } else {
+                alert('Article not found');
+                window.location.href = 'index.html';
+            }
+        }
+
+        window.onload = getArticle;
+    </script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto my-8 p-4">
+        <h1 class="text-3xl font-bold mb-4" id="article-title">Loading...</h1>
+        <a href="edit.html?id=<%= article.id %>" class="text-yellow-500">Edit Article</a>
+    </div>
+</body>
+
+</html>
